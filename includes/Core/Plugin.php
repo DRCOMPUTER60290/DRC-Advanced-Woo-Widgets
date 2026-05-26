@@ -34,6 +34,7 @@ class Plugin {
 	private function init_hooks(): void {
 		add_action( 'init', [ $this, 'load_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
 	}
 
@@ -50,17 +51,9 @@ class Plugin {
 		);
 
 		wp_enqueue_script(
-			'drc-aww-swiper',
-			DRC_AWW_PLUGIN_URL . 'assets/js/swiper-bundle.min.js',
-			[],
-			'8.4.7',
-			true
-		);
-
-		wp_enqueue_script(
 			'drc-aww-scripts',
 			DRC_AWW_PLUGIN_URL . 'assets/js/frontend.js',
-			[ 'jquery', 'drc-aww-swiper' ],
+			[ 'jquery' ],
 			$this->version,
 			true
 		);
@@ -76,6 +69,15 @@ class Plugin {
 			'expired'   => __( 'Sale ended', 'drc-advanced-woo-widgets' ),
 			'error'     => __( 'Error', 'drc-advanced-woo-widgets' ),
 		] );
+	}
+
+	public function enqueue_editor_scripts(): void {
+		wp_enqueue_style(
+			'drc-aww-editor-styles',
+			DRC_AWW_PLUGIN_URL . 'assets/css/frontend.css',
+			[],
+			$this->version
+		);
 	}
 
 	public function elementor_init(): void {

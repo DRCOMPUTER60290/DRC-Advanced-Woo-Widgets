@@ -7,6 +7,8 @@ namespace DRC\AWW\Core;
 
 defined( 'ABSPATH' ) || exit;
 
+use DRC\AWW\Helpers\Helper_Functions;
+
 class Activator {
 
 	public static function activate(): void {

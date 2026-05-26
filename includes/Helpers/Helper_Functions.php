@@ -56,8 +56,10 @@ class Helper_Functions {
 		] );
 
 		$options = [ '' => __( 'All Categories', 'drc-advanced-woo-widgets' ) ];
-		foreach ( $terms as $term ) {
-			$options[ $term->term_id ] = $term->name;
+		if ( is_array( $terms ) && ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$options[ $term->term_id ] = $term->name;
+			}
 		}
 
 		return $options;
@@ -70,8 +72,10 @@ class Helper_Functions {
 		] );
 
 		$options = [ '' => __( 'All Tags', 'drc-advanced-woo-widgets' ) ];
-		foreach ( $terms as $term ) {
-			$options[ $term->term_id ] = $term->name;
+		if ( is_array( $terms ) && ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$options[ $term->term_id ] = $term->name;
+			}
 		}
 
 		return $options;
