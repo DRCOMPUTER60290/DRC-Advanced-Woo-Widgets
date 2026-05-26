@@ -9,6 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Widget_Base;
 use DRC\AWW\Helpers\Helper_Functions;
+use DRC\AWW\Helpers\Template_Loader;
 use DRC\AWW\Queries\Products\Product_Query;
 
 abstract class Base_Widget extends Widget_Base {
@@ -341,19 +342,67 @@ abstract class Base_Widget extends Widget_Base {
 			return;
 		}
 
-		$layout = $settings['layout'] ?? 'grid';
+		$layout     = $settings['layout'] ?? 'grid';
+		$columns    = intval( $settings['columns'] ?? 4 );
+		$loader     = Template_Loader::instance();
 
-		// Try theme override first
-		$template = locate_template( "drc-aww/layouts/{$layout}.php" );
-		if ( ! $template ) {
-			$template = DRC_AWW_PLUGIN_DIR . "templates/layouts/{$layout}.php";
-		}
+		// Build container classes
+		$container_class = 'drc-aww-container drc-aww-layout-' . esc_attr( $layout );
+		$container_class .= ' drc-aww-columns-' . $columns;
 
-		if ( file_exists( $template ) ) {
-			include $template;
+		$use_template = $loader->locate_template( 'layouts/' . $layout ) !== null;
+
+		if ( 'carousel' === $layout ) {
+			$this->render_carousel_wrapper( $products, $settings, $loader );
+		} elseif ( $use_template ) {
+			echo '<div class="' . esc_attr( $container_class ) . '">';
+			foreach ( $products as $product_id ) {
+				$product = wc_get_product( $product_id );
+				if ( ! $product ) {
+					continue;
+				}
+				$loader->load_template( 'layouts/' . $layout, [
+					'product'  => $product,
+					'settings' => $settings,
+				] );
+			}
+			echo '</div>';
 		} else {
 			// Fallback to default grid
 			$this->render_default_grid( $products, $settings );
+		}
+	}
+
+	protected function render_carousel_wrapper( array $products, array $settings, Template_Loader $loader ): void {
+		$carousel_id = 'drc-carousel-' . uniqid();
+		$columns     = intval( $settings['columns'] ?? 4 );
+
+		echo '<div id="' . esc_attr( $carousel_id ) . '" class="drc-aww-carousel swiper" data-columns="' . esc_attr( $columns ) . '">';
+		echo '<div class="swiper-wrapper">';
+
+		foreach ( $products as $product_id ) {
+			$product = wc_get_product( $product_id );
+			if ( ! $product ) {
+				continue;
+			}
+			$loader->load_template( 'layouts/carousel', [
+				'product'  => $product,
+				'settings' => $settings,
+			] );
+		}
+
+		echo '</div>';
+		echo '<div class="swiper-pagination"></div>';
+		echo '<div class="swiper-button-next"></div>';
+		echo '<div class="swiper-button-prev"></div>';
+		echo '</div>';
+
+		// Enqueue Swiper if not already loaded
+		if ( ! wp_script_is( 'swiper', 'enqueued' ) ) {
+			wp_enqueue_script( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], '11', true );
+		}
+		if ( ! wp_style_is( 'swiper', 'enqueued' ) ) {
+			wp_enqueue_style( 'swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11' );
 		}
 	}
 
@@ -393,6 +442,41 @@ abstract class Base_Widget extends Widget_Base {
 					<?php echo esc_html( $settings['button_text'] ?? __( 'View Product', 'drc-advanced-woo-widgets' ) ); ?>
 				</a>
 			<?php endif; ?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * JavaScript template for Elementor editor live preview
+	 */
+	protected function content_template(): void {
+		?>
+		<#
+		var layout = settings.layout || 'grid';
+		var columns = settings.columns || 4;
+		var count = settings.products_count || 4;
+		var placeholderTitle = '<?php echo esc_js( __( 'Product Title', 'drc-advanced-woo-widgets' ) ); ?>';
+		#>
+		<div class="drc-aww-editor-preview">
+			<div class="drc-aww-container drc-aww-layout-{{ layout }} drc-aww-columns-{{ columns }}">
+				<# for ( var i = 0; i < count; i++ ) { #>
+					<div class="drc-aww-product drc-aww-layout-{{ layout }}">
+						<div class="drc-aww-product-image">
+							<div class="drc-aww-placeholder-image" style="background:#e0e0e0;height:200px;display:flex;align-items:center;justify-content:center;color:#999;">
+								<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+									<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+									<circle cx="8.5" cy="8.5" r="1.5"/>
+									<path d="M21 15l-5-5L5 21"/>
+								</svg>
+							</div>
+						</div>
+						<div class="drc-aww-product-content">
+							<h3 class="drc-aww-product-title">{{ placeholderTitle }}</h3>
+							<div class="drc-aww-product-price">$0.00</div>
+						</div>
+					</div>
+				<# } #>
+			</div>
 		</div>
 		<?php
 	}
