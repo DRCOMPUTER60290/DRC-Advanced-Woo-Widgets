@@ -100,11 +100,17 @@ class Flash_Sale_Products extends Base_Widget {
 	}
 
 	protected function get_products( array $settings ): array {
+		// If manual products are selected, use those directly
+		$manual = $this->get_manual_products( $settings );
+		if ( ! empty( $manual ) ) {
+			return $manual;
+		}
+
 		$limit = (int) ( $settings['products_count'] ?? 8 );
 		$products = wc_get_products( [ 'limit' => $limit * 2, 'status' => 'publish' ] );
 
 		$flash = [];
-		$now = current_time( 'timestamp' );
+		$now = time();
 
 		foreach ( $products as $product ) {
 			if ( ! $product->is_on_sale() ) continue;
