@@ -7,6 +7,12 @@ namespace DRC\AWW\Core;
 
 defined( 'ABSPATH' ) || exit;
 
+use DRC\AWW\Admin\Admin;
+use DRC\AWW\Ajax\Ajax_Handler;
+use DRC\AWW\Cache\Product_Cache;
+use DRC\AWW\Helpers\Template_Loader;
+use DRC\AWW\Widgets\Widget_Manager;
+
 class Plugin {
 
 	private static $instance = null;
@@ -78,7 +84,7 @@ class Plugin {
 			return;
 		}
 
-		Widgets\Widget_Manager::instance();
+		Widget_Manager::instance();
 	}
 
 	public function elementor_missing_notice(): void {
@@ -90,16 +96,16 @@ class Plugin {
 	private function load_components(): void {
 		// Load Admin
 		if ( is_admin() ) {
-			Admin\Admin::instance();
+			Admin::instance();
 		}
 
 		// Load Ajax handlers
-		Ajax\Ajax_Handler::instance();
+		Ajax_Handler::instance();
 
 		// Load cache system
-		Cache\Product_Cache::instance();
+		Product_Cache::instance();
 
 		// Load helpers
-		Helpers\Template_Loader::instance();
+		Template_Loader::instance();
 	}
 }
