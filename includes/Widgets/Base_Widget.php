@@ -457,38 +457,9 @@ abstract class Base_Widget extends Widget_Base {
 		<?php
 	}
 
-	/**
-	 * JavaScript template for Elementor editor live preview
+	/*
+	 * Note: content_template() is intentionally omitted.
+	 * Elementor falls back to server-side render() (AJAX) for editor preview,
+	 * which shows real products from WooCommerce.
 	 */
-	protected function content_template(): void {
-		?>
-		<#
-		var layout = settings.layout || 'grid';
-		var columns = settings.columns || 4;
-		var count = settings.products_count || 4;
-		var placeholderTitle = '<?php echo esc_js( __( 'Product Title', 'drc-advanced-woo-widgets' ) ); ?>';
-		#>
-		<div class="drc-aww-editor-preview">
-			<div class="drc-aww-container drc-aww-layout-{{ layout }} drc-aww-columns-{{ columns }}">
-				<# for ( var i = 0; i < count; i++ ) { #>
-					<div class="drc-aww-product drc-aww-layout-{{ layout }}">
-						<div class="drc-aww-product-image">
-							<div class="drc-aww-placeholder-image" style="background:#e0e0e0;height:200px;display:flex;align-items:center;justify-content:center;color:#999;">
-								<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-									<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-									<circle cx="8.5" cy="8.5" r="1.5"/>
-									<path d="M21 15l-5-5L5 21"/>
-								</svg>
-							</div>
-						</div>
-						<div class="drc-aww-product-content">
-							<h3 class="drc-aww-product-title">{{ placeholderTitle }}</h3>
-							<div class="drc-aww-product-price">$0.00</div>
-						</div>
-					</div>
-				<# } #>
-			</div>
-		</div>
-		<?php
-	}
 }
