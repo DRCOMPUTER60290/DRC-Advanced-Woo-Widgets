@@ -29,6 +29,7 @@ class Plugin {
 	private function __construct() {
 		$this->init_hooks();
 		$this->load_components();
+		$this->clear_stale_transients();
 	}
 
 	private function init_hooks(): void {
@@ -117,6 +118,28 @@ class Plugin {
 		echo '<div class="error"><p>' .
 			__( 'DRC Advanced Woo Widgets requires Elementor to be installed and activated.', 'drc-advanced-woo-widgets' ) .
 			'</p></div>';
+	}
+
+	/**
+	 * Clear stale transients that may have cached empty product results
+	 * before the WooCommerce fallback was added.
+	 */
+	private function clear_stale_transients(): void {
+		$cleared_version = get_option( 'drc_aww_transients_cleared_version', '' );
+		if ( $cleared_version === $this->version ) {
+			return;
+		}
+
+		global $wpdb;
+
+		// Delete all DRC product cache transients
+		$wpdb->query(
+			"DELETE FROM {$wpdb->options}
+			 WHERE option_name LIKE '_site_transient_drc_aww_%'
+			 OR option_name LIKE '_site_transient_timeout_drc_aww_%'"
+		);
+
+		update_option( 'drc_aww_transients_cleared_version', $this->version );
 	}
 
 	private function load_components(): void {

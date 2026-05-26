@@ -191,10 +191,10 @@ class Product_Cache {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		// Try transient first
+		// Try transient first (skip empty cached results so fallback can run)
 		$cache_key = 'drc_aww_best_sellers_' . md5( wp_json_encode( $args ) );
 		$cached = get_site_transient( $cache_key );
-		if ( false !== $cached ) {
+		if ( false !== $cached && ! empty( $cached ) ) {
 			return $cached;
 		}
 
@@ -266,7 +266,7 @@ class Product_Cache {
 
 		$cache_key = 'drc_aww_products_score_' . md5( wp_json_encode( $args ) );
 		$cached = get_site_transient( $cache_key );
-		if ( false !== $cached ) {
+		if ( false !== $cached && ! empty( $cached ) ) {
 			return $cached;
 		}
 

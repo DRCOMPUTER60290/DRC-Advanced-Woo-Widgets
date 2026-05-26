@@ -337,6 +337,17 @@ abstract class Base_Widget extends Widget_Base {
 	 * Render products
 	 */
 	protected function render_products( array $products, array $settings ): void {
+		// Last-resort fallback: query WooCommerce directly if no products from cache
+		if ( empty( $products ) ) {
+			$products = wc_get_products( [
+				'limit'   => max( 1, intval( $settings['products_count'] ?? 8 ) ),
+				'status'  => 'publish',
+				'orderby' => 'popularity',
+				'order'   => 'DESC',
+				'return'  => 'ids',
+			] );
+		}
+
 		if ( empty( $products ) ) {
 			echo '<p class="drc-no-products">' . esc_html__( 'No products found.', 'drc-advanced-woo-widgets' ) . '</p>';
 			return;
