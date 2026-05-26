@@ -36,6 +36,7 @@ class Popular_Products extends Base_Widget {
 		);
 
 		$this->add_named_control( $this->get_period_control() );
+		$this->add_named_control( $this->get_manual_products_control() );
 		$this->add_named_control( $this->get_category_control() );
 		$this->add_named_control( $this->get_tags_control() );
 		$this->add_named_control( $this->get_featured_control() );

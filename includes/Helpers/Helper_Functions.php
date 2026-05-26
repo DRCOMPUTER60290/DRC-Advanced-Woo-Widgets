@@ -81,6 +81,26 @@ class Helper_Functions {
 		return $options;
 	}
 
+	public static function get_products_list(): array {
+		$products = wc_get_products( [
+			'limit'   => 200,
+			'status'  => 'publish',
+			'orderby' => 'title',
+			'order'   => 'ASC',
+		] );
+
+		$options = [];
+		foreach ( $products as $product ) {
+			$options[ $product->get_id() ] = sprintf(
+				'%s (#%d)',
+				$product->get_name(),
+				$product->get_id()
+			);
+		}
+
+		return $options;
+	}
+
 	public static function get_stock_status_options(): array {
 		return [
 			'instock'     => __( 'In Stock', 'drc-advanced-woo-widgets' ),

@@ -329,6 +329,51 @@ abstract class Base_Widget extends Widget_Base {
 	}
 
 	/**
+	 * Manual product selection control (SELECT2 with product search)
+	 */
+	protected function get_manual_products_control(): array {
+		return [
+			'name'        => 'manual_products',
+			'label'       => __( 'Manual Product Selection', 'drc-advanced-woo-widgets' ),
+			'type'        => \Elementor\Controls_Manager::SELECT2,
+			'options'     => Helper_Functions::get_products_list(),
+			'label_block' => true,
+			'multiple'    => true,
+			'description' => __( 'Select specific products to display. Leave empty to use automatic query.', 'drc-advanced-woo-widgets' ),
+		];
+	}
+
+	/**
+	 * Get manually selected products from widget settings
+	 */
+	protected function get_manual_products( array $settings ): array {
+		if ( empty( $settings['manual_products'] ) ) {
+			return [];
+		}
+
+		$ids = is_array( $settings['manual_products'] )
+			? $settings['manual_products']
+			: explode( ',', $settings['manual_products'] );
+
+		$ids = array_map( 'intval', $ids );
+		$ids = array_filter( $ids );
+
+		if ( empty( $ids ) ) {
+			return [];
+		}
+
+		$valid_ids = [];
+		foreach ( $ids as $id ) {
+			$product = wc_get_product( $id );
+			if ( $product && $product->is_visible() ) {
+				$valid_ids[] = $id;
+			}
+		}
+
+		return $valid_ids;
+	}
+
+	/**
 	 * Get products based on widget type
 	 */
 	abstract protected function get_products( array $settings ): array;
@@ -337,6 +382,12 @@ abstract class Base_Widget extends Widget_Base {
 	 * Render products
 	 */
 	protected function render_products( array $products, array $settings ): void {
+		// Priority: use manually selected products if configured
+		$manual = $this->get_manual_products( $settings );
+		if ( ! empty( $manual ) ) {
+			$products = $manual;
+		}
+
 		// Last-resort fallback: query WooCommerce directly if no products from cache
 		if ( empty( $products ) ) {
 			$products = wc_get_products( [

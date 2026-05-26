@@ -54,6 +54,7 @@ class Flash_Sale_Products extends Base_Widget {
 			'condition' => [ 'show_timer' => 'yes' ],
 		] );
 
+		$this->add_named_control( $this->get_manual_products_control() );
 		$this->add_named_control( $this->get_category_control() );
 		$this->add_named_control( $this->get_tags_control() );
 		$this->add_named_control( $this->get_stock_control() );
