@@ -38,17 +38,17 @@ class Best_Selling_Products extends Base_Widget {
 			]
 		);
 
-		$this->add_control( $this->get_period_control() );
-		$this->add_control( $this->get_category_control() );
-		$this->add_control( $this->get_tags_control() );
-		$this->add_control( $this->get_featured_control() );
-		$this->add_control( $this->get_onsale_control() );
-		$this->add_control( $this->get_stock_control() );
-		$this->add_control( $this->get_layout_type_control() );
-		$this->add_control( $this->get_columns_control() );
-		$this->add_control( $this->get_products_count_control() );
-		$this->add_control( $this->get_sort_by_control() );
-		$this->add_control( $this->get_sort_order_control() );
+		$this->add_named_control( $this->get_period_control() );
+		$this->add_named_control( $this->get_category_control() );
+		$this->add_named_control( $this->get_tags_control() );
+		$this->add_named_control( $this->get_featured_control() );
+		$this->add_named_control( $this->get_onsale_control() );
+		$this->add_named_control( $this->get_stock_control() );
+		$this->add_named_control( $this->get_layout_type_control() );
+		$this->add_named_control( $this->get_columns_control() );
+		$this->add_named_control( $this->get_products_count_control() );
+		$this->add_named_control( $this->get_sort_by_control() );
+		$this->add_named_control( $this->get_sort_order_control() );
 
 		$this->end_controls_section();
 
@@ -61,9 +61,9 @@ class Best_Selling_Products extends Base_Widget {
 			]
 		);
 
-		$this->add_control( $this->get_columns_gap_control() );
-		$this->add_control( $this->get_items_gap_control() );
-		$this->add_control( $this->get_border_radius_control() );
+		$this->add_named_control( $this->get_columns_gap_control() );
+		$this->add_named_control( $this->get_items_gap_control() );
+		$this->add_named_control( $this->get_border_radius_control() );
 
 		$this->end_controls_section();
 
@@ -76,7 +76,7 @@ class Best_Selling_Products extends Base_Widget {
 			]
 		);
 
-		$this->add_control( $this->get_title_color_control() );
+		$this->add_named_control( $this->get_title_color_control() );
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
@@ -98,7 +98,7 @@ class Best_Selling_Products extends Base_Widget {
 			]
 		);
 
-		$this->add_control( $this->get_price_color_control() );
+		$this->add_named_control( $this->get_price_color_control() );
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
@@ -121,32 +121,26 @@ class Best_Selling_Products extends Base_Widget {
 		);
 
 		foreach ( $this->get_button_controls() as $control ) {
-			$this->add_control( $control );
+			$this->add_named_control( $control );
 		}
 
-		$this->add_control(
-			'button_background',
-			[
-				'name'     => 'button_background',
-				'label'    => __( 'Background', 'drc-advanced-woo-widgets' ),
-				'type'     => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .drc-product-button' => 'background-color: {{VALUE}};',
-				],
-			]
-		);
+		$this->add_named_control( [
+			'name'     => 'button_background',
+			'label'    => __( 'Background', 'drc-advanced-woo-widgets' ),
+			'type'     => Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}} .drc-product-button' => 'background-color: {{VALUE}};',
+			],
+		] );
 
-		$this->add_control(
-			'button_text_color',
-			[
-				'name'     => 'button_text_color',
-				'label'    => __( 'Text Color', 'drc-advanced-woo-widgets' ),
-				'type'     => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .drc-product-button' => 'color: {{VALUE}};',
-				],
-			]
-		);
+		$this->add_named_control( [
+			'name'     => 'button_text_color',
+			'label'    => __( 'Text Color', 'drc-advanced-woo-widgets' ),
+			'type'     => Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}} .drc-product-button' => 'color: {{VALUE}};',
+			],
+		] );
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),

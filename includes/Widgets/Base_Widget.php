@@ -21,6 +21,16 @@ abstract class Base_Widget extends Widget_Base {
 	}
 
 	/**
+	 * Add a control from a named array — extracts 'name' key and passes it
+	 * as the first argument to parent::add_control().
+	 */
+	protected function add_named_control( array $control ): void {
+		$name = $control['name'];
+		unset( $control['name'] );
+		$this->add_control( $name, $control );
+	}
+
+	/**
 	 * Get general section
 	 */
 	protected function get_general_controls(): array {

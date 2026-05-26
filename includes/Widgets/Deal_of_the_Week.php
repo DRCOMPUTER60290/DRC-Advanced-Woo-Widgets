@@ -34,7 +34,7 @@ class Deal_of_the_Week extends Base_Widget {
 			[ 'label' => __( 'Content', 'drc-advanced-woo-widgets' ) ]
 		);
 
-		$this->add_control( [
+		$this->add_named_control( [
 			'name'    => 'min_discount',
 			'label'   => __( 'Min Discount %', 'drc-advanced-woo-widgets' ),
 			'type'    => Controls_Manager::NUMBER,
@@ -43,19 +43,19 @@ class Deal_of_the_Week extends Base_Widget {
 			'max'     => 100,
 		] );
 
-		$this->add_control( [
+		$this->add_named_control( [
 			'name'    => 'show_discount_badge',
 			'label'   => __( 'Show Discount Badge', 'drc-advanced-woo-widgets' ),
 			'type'    => Controls_Manager::SWITCHER,
 			'default' => 'yes',
 		] );
 
-		$this->add_control( $this->get_category_control() );
-		$this->add_control( $this->get_tags_control() );
-		$this->add_control( $this->get_stock_control() );
-		$this->add_control( $this->get_layout_type_control() );
-		$this->add_control( $this->get_columns_control() );
-		$this->add_control( $this->get_products_count_control() );
+		$this->add_named_control( $this->get_category_control() );
+		$this->add_named_control( $this->get_tags_control() );
+		$this->add_named_control( $this->get_stock_control() );
+		$this->add_named_control( $this->get_layout_type_control() );
+		$this->add_named_control( $this->get_columns_control() );
+		$this->add_named_control( $this->get_products_count_control() );
 
 		$this->end_controls_section();
 
@@ -64,13 +64,13 @@ class Deal_of_the_Week extends Base_Widget {
 			[ 'label' => __( 'Style', 'drc-advanced-woo-widgets' ), 'tab' => Controls_Manager::TAB_STYLE ]
 		);
 
-		$this->add_control( $this->get_columns_gap_control() );
-		$this->add_control( $this->get_items_gap_control() );
-		$this->add_control( $this->get_border_radius_control() );
-		$this->add_control( $this->get_title_color_control() );
-		$this->add_control( $this->get_price_color_control() );
+		$this->add_named_control( $this->get_columns_gap_control() );
+		$this->add_named_control( $this->get_items_gap_control() );
+		$this->add_named_control( $this->get_border_radius_control() );
+		$this->add_named_control( $this->get_title_color_control() );
+		$this->add_named_control( $this->get_price_color_control() );
 
-		$this->add_control( [
+		$this->add_named_control( [
 			'name' => 'badge_bg',
 			'label' => __( 'Badge Background', 'drc-advanced-woo-widgets' ),
 			'type' => Controls_Manager::COLOR,

@@ -35,15 +35,15 @@ class Popular_Products extends Base_Widget {
 			[ 'label' => __( 'Content', 'drc-advanced-woo-widgets' ) ]
 		);
 
-		$this->add_control( $this->get_period_control() );
-		$this->add_control( $this->get_category_control() );
-		$this->add_control( $this->get_tags_control() );
-		$this->add_control( $this->get_featured_control() );
-		$this->add_control( $this->get_onsale_control() );
-		$this->add_control( $this->get_stock_control() );
-		$this->add_control( $this->get_layout_type_control() );
-		$this->add_control( $this->get_columns_control() );
-		$this->add_control( $this->get_products_count_control() );
+		$this->add_named_control( $this->get_period_control() );
+		$this->add_named_control( $this->get_category_control() );
+		$this->add_named_control( $this->get_tags_control() );
+		$this->add_named_control( $this->get_featured_control() );
+		$this->add_named_control( $this->get_onsale_control() );
+		$this->add_named_control( $this->get_stock_control() );
+		$this->add_named_control( $this->get_layout_type_control() );
+		$this->add_named_control( $this->get_columns_control() );
+		$this->add_named_control( $this->get_products_count_control() );
 
 		$this->end_controls_section();
 
@@ -52,11 +52,11 @@ class Popular_Products extends Base_Widget {
 			[ 'label' => __( 'Style', 'drc-advanced-woo-widgets' ), 'tab' => Controls_Manager::TAB_STYLE ]
 		);
 
-		$this->add_control( $this->get_columns_gap_control() );
-		$this->add_control( $this->get_items_gap_control() );
-		$this->add_control( $this->get_border_radius_control() );
-		$this->add_control( $this->get_title_color_control() );
-		$this->add_control( $this->get_price_color_control() );
+		$this->add_named_control( $this->get_columns_gap_control() );
+		$this->add_named_control( $this->get_items_gap_control() );
+		$this->add_named_control( $this->get_border_radius_control() );
+		$this->add_named_control( $this->get_title_color_control() );
+		$this->add_named_control( $this->get_price_color_control() );
 
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name' => 'title_typography', 'label' => __( 'Title Typography', 'drc-advanced-woo-widgets' ),

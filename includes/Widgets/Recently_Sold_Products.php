@@ -34,7 +34,7 @@ class Recently_Sold_Products extends Base_Widget {
 			[ 'label' => __( 'Content', 'drc-advanced-woo-widgets' ) ]
 		);
 
-		$this->add_control( [
+		$this->add_named_control( [
 			'name'    => 'hours_back',
 			'label'   => __( 'Hours Back', 'drc-advanced-woo-widgets' ),
 			'type'    => Controls_Manager::NUMBER,
@@ -43,19 +43,19 @@ class Recently_Sold_Products extends Base_Widget {
 			'max'     => 168,
 		] );
 
-		$this->add_control( [
+		$this->add_named_control( [
 			'name'    => 'show_sold_count',
 			'label'   => __( 'Show Sold Count', 'drc-advanced-woo-widgets' ),
 			'type'    => Controls_Manager::SWITCHER,
 			'default' => 'yes',
 		] );
 
-		$this->add_control( $this->get_category_control() );
-		$this->add_control( $this->get_tags_control() );
-		$this->add_control( $this->get_stock_control() );
-		$this->add_control( $this->get_layout_type_control() );
-		$this->add_control( $this->get_columns_control() );
-		$this->add_control( $this->get_products_count_control() );
+		$this->add_named_control( $this->get_category_control() );
+		$this->add_named_control( $this->get_tags_control() );
+		$this->add_named_control( $this->get_stock_control() );
+		$this->add_named_control( $this->get_layout_type_control() );
+		$this->add_named_control( $this->get_columns_control() );
+		$this->add_named_control( $this->get_products_count_control() );
 
 		$this->end_controls_section();
 
@@ -64,11 +64,11 @@ class Recently_Sold_Products extends Base_Widget {
 			[ 'label' => __( 'Style', 'drc-advanced-woo-widgets' ), 'tab' => Controls_Manager::TAB_STYLE ]
 		);
 
-		$this->add_control( $this->get_columns_gap_control() );
-		$this->add_control( $this->get_items_gap_control() );
-		$this->add_control( $this->get_border_radius_control() );
-		$this->add_control( $this->get_title_color_control() );
-		$this->add_control( $this->get_price_color_control() );
+		$this->add_named_control( $this->get_columns_gap_control() );
+		$this->add_named_control( $this->get_items_gap_control() );
+		$this->add_named_control( $this->get_border_radius_control() );
+		$this->add_named_control( $this->get_title_color_control() );
+		$this->add_named_control( $this->get_price_color_control() );
 
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name' => 'title_typography', 'label' => __( 'Title Typography', 'drc-advanced-woo-widgets' ),
