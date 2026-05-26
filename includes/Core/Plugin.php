@@ -34,7 +34,7 @@ class Plugin {
 	private function init_hooks(): void {
 		add_action( 'init', [ $this, 'load_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
-		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_editor_scripts' ] );
+		add_action( 'elementor/preview/enqueue_scripts', [ $this, 'enqueue_editor_preview_scripts' ] );
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
 	}
 
@@ -51,9 +51,17 @@ class Plugin {
 		);
 
 		wp_enqueue_script(
+			'drc-aww-swiper',
+			'https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.js',
+			[],
+			'8.4.7',
+			true
+		);
+
+		wp_enqueue_script(
 			'drc-aww-scripts',
 			DRC_AWW_PLUGIN_URL . 'assets/js/frontend.js',
-			[ 'jquery' ],
+			[ 'jquery', 'drc-aww-swiper' ],
 			$this->version,
 			true
 		);
@@ -71,12 +79,28 @@ class Plugin {
 		] );
 	}
 
-	public function enqueue_editor_scripts(): void {
+	public function enqueue_editor_preview_scripts(): void {
 		wp_enqueue_style(
-			'drc-aww-editor-styles',
+			'drc-aww-styles',
 			DRC_AWW_PLUGIN_URL . 'assets/css/frontend.css',
 			[],
 			$this->version
+		);
+
+		wp_enqueue_script(
+			'drc-aww-swiper',
+			'https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.js',
+			[],
+			'8.4.7',
+			true
+		);
+
+		wp_enqueue_script(
+			'drc-aww-scripts',
+			DRC_AWW_PLUGIN_URL . 'assets/js/frontend.js',
+			[ 'jquery', 'drc-aww-swiper' ],
+			$this->version,
+			true
 		);
 	}
 
