@@ -1,0 +1,38 @@
+/**
+ * DRC Advanced Woo Widgets - Admin Styles
+ */
+
+.drc-aww-admin-header {
+	background: #fff;
+	padding: 15px 20px;
+	margin: 20px 0;
+	border-left: 4px solid #0073aa;
+	box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.drc-aww-admin-header p {
+	margin: 0;
+	font-size: 14px;
+	color: #555;
+}
+
+.drc-aww-stats-overview {
+	margin-top: 30px;
+	background: #fff;
+	padding: 20px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.drc-aww-stats-overview h2 {
+	margin-top: 0;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+.drc-aww-stats-overview table {
+	margin-top: 15px;
+}
+
+.drc-aww-stats-overview th {
+	font-weight: 600;
+}
