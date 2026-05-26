@@ -211,6 +211,16 @@ class Product_Cache {
 
 		$product_ids = $wpdb->get_col( $query );
 
+		if ( empty( $product_ids ) ) {
+			$product_ids = wc_get_products( [
+				'limit'   => $args['limit'] * 2,
+				'status'  => 'publish',
+				'orderby' => 'total_sales',
+				'order'   => 'DESC',
+				'return'  => 'ids',
+			] );
+		}
+
 		$products = $this->filter_products( $product_ids, $args );
 
 		set_site_transient( $cache_key, $products, HOUR_IN_SECONDS );
