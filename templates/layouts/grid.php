@@ -11,6 +11,9 @@ $settings = $args['settings'] ?? [];
 if ( ! $product ) {
 	return;
 }
+
+// Set global $product for WooCommerce template functions (rating, add_to_cart)
+$GLOBALS['product'] = $product;
 ?>
 
 <div class="drc-aww-product drc-aww-layout-grid">
