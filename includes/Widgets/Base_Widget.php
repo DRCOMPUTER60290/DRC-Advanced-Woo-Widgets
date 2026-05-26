@@ -48,7 +48,7 @@ abstract class Base_Widget extends Widget_Base {
 	/**
 	 * Get style section
 	 */
-	protected function get_style_controls(): array {
+	protected function get_style_controls_list(): array {
 		return [
 			$this->get_columns_gap_control(),
 			$this->get_items_gap_control(),
